@@ -16,6 +16,7 @@ function verifyOptions(options) {
     var input = options.input || 'protobuf';
     var target = options.target || 'commonjs';
     var extension = options.ext || null;
+    var syntax = options.syntax || null;
 
     if (input !== 'protobuf' && input !== 'json') {
         throw new PluginError('Input option only accepts protobuf or json as parameter');
@@ -34,7 +35,8 @@ function verifyOptions(options) {
         input: input,
         target: target,
         path: options.path,
-        ext: extension
+        ext: extension,
+        syntax: syntax
     };
     if (options.path !== undefined && !Array.isArray(options.path)) {
         options.path = [options.path];

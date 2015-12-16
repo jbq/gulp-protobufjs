@@ -39,6 +39,23 @@ describe('index', function () {
         });
     });
 
+    it('should be able to propagate syntax', function () {
+        return Q.Promise(function (resolve, reject) {
+            var fakeFile = new File({
+                contents: new Buffer(protoBufData)
+            });
+            var plugin = gulpprotobuf({syntax: "proto3"});
+            plugin.write(fakeFile);
+            plugin.once('data', function (file) {
+                file.contents.toString('utf-8').should.containEql('proto3');
+                resolve();
+            });
+            plugin.once('error', function (err) {
+                reject(err);
+            });
+        });
+    });
+
     it('should be able to parse a json file', function () {
         return Q.Promise(function (resolve, reject) {
             var fakeFile = new File({
